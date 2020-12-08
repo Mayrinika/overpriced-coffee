@@ -32,6 +32,7 @@ app.engine(
     })
 );
 
+app.use(cookieParser());
 app.use('/static', express.static('static'));
 
 app.get("/", (_, res) => {
@@ -65,7 +66,6 @@ app.post("/cart", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-    res.status(501).end();
     let username = req.cookies.username;
     if(req.query.username) {
         username = req.query.username;
