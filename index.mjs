@@ -7,6 +7,7 @@ const rootDir = process.cwd();
 const port = 3000;
 const app = express();
 
+const DEFAULT_USERNAME = 'Аноним';
 const menu = [
     {name: "Americano", image: "/static/img/americano.jpg", price: 999,},
     {name: "Cappuccino", image: "/static/img/cappuccino.jpg", price: 999},
@@ -65,6 +66,15 @@ app.post("/cart", (req, res) => {
 
 app.get("/login", (req, res) => {
     res.status(501).end();
+    let username = req.cookies.username;
+    if(req.query.username) {
+        username = req.query.username;
+        res.cookie('username', req.query.username);
+    }
+    res.render("login", {
+        layout: "default",
+        username: username || DEFAULT_USERNAME
+    });
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
